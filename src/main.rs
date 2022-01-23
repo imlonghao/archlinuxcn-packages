@@ -3,6 +3,7 @@ extern crate enum_display_derive;
 
 use actix_web::{get, web, App, HttpResponse, HttpServer, Responder};
 use anyhow::{Context, Result};
+use bigdecimal::ToPrimitive;
 use cached::proc_macro::cached;
 use postgres_types::{FromSql, ToSql};
 use serde::Serialize;
