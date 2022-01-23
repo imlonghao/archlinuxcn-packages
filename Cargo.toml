@@ -12,5 +12,5 @@ chrono = "0.4.19"
 deadpool-postgres = "0.10.1"
 enum-display-derive = "0.1.1"
 postgres-types = { version = "0.2.2", features = ["derive"]}
-serde = { version = "1.0.130", features = ["derive"] }
+serde = { version = "1.0.135", features = ["derive"] }
 tokio-postgres = { version = "0.7.5", features = ["with-chrono-0_4"]}
