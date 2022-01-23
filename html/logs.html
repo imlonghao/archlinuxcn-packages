@@ -16,9 +16,6 @@
     <script src="https://cdn.jsdelivr.net/npm/datatables.net@1.10.20/js/jquery.dataTables.min.js"
         integrity="sha256-LXQzPhL1IRyKkA7HpCOBi8I+OC8HqzHUYkjK8S+LKTs=" crossorigin="anonymous"></script>
     <script>
-        function more(pkg) {
-            window.location.hash = "#" + pkg
-        }
         $(window).on('hashchange', function () {
             url = window.location.hash.includes("#") ? "/imlonghao-api/pkg/" + window.location.hash.slice(1) : "/imlonghao-api/logs"
             $.get(url, function (newDataArray) {
@@ -104,7 +101,7 @@
                         title: "更多",
                         data: "pkgbase",
                         render: function (data, type, row, meta) {
-                            return `<a href="javascript:more('${data}')">更多</a>`
+                            return `<a href=#${data}">更多</a>`
                         }
                     }
                 ]
