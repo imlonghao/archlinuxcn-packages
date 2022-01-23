@@ -16,9 +16,6 @@ code {
     font-size: 12px;
     line-height: 20px;
     white-space: pre-wrap;
-    margin: 0 auto;
-    width: 80%;
-    display: block;
 }
 </style>"#;
 
