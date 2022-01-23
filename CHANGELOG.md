@@ -16,6 +16,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Remove the quote tag from more href
 - Remove the word `率` in memory field
 - Prevent A link being wrap
+- Fixed the decimal places for memory field
 
 ## [0.2.1] - 2022-01-23
 
