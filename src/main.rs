@@ -173,6 +173,44 @@ async fn logs(db: web::Data<deadpool_postgres::Pool>) -> impl Responder {
     HttpResponse::Ok().json(results)
 }
 
+#[get("/imlonghao-api/pkg/{name}")]
+async fn get_pkg(
+    name: web::Path<String>,
+    db: web::Data<deadpool_postgres::Pool>,
+) -> impl Responder {
+    let conn = db.get().await.unwrap();
+    let rows = conn
+        .query(
+            "select ts, pkgbase, COALESCE(pkg_version, '') AS pkg_version, elapsed, result, COALESCE(case when elapsed = 0 then 0 else cputime * 100 / elapsed end, -1) AS cpu, COALESCE(round(memory / 1073741824.0, 3), -1) AS memory from lilac.pkglog WHERE pkgbase=$1 order by id desc",
+            &[&name.to_string()],
+        )
+        .await
+        .unwrap();
+    let mut results: Vec<LogsResponse> = vec![];
+    for row in rows {
+        let ts: chrono::DateTime<chrono::Utc> = row.get("ts");
+        let pkgbase: String = row.get("pkgbase");
+        let pkg_version: String = row.get("pkg_version");
+        let maintainer = get_maintainer(pkgbase.clone()).unwrap_or("Unknown".to_string());
+        let elapsed: i32 = row.get("elapsed");
+        let result: BuildResult = row.get("result");
+        let cpu: i32 = row.get("cpu");
+        let memory: pg_bigdecimal::PgNumeric = row.get("memory");
+        let memory_bd: bigdecimal::BigDecimal = memory.n.unwrap();
+        results.push(LogsResponse {
+            ts: ts.timestamp(),
+            pkgbase: pkgbase,
+            pkg_version: pkg_version,
+            maintainer: maintainer,
+            elapsed: elapsed,
+            result: result.to_string(),
+            cpu: cpu,
+            memory: memory_bd.to_f64().unwrap(),
+        })
+    }
+    HttpResponse::Ok().json(results)
+}
+
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
     let mut cfg = deadpool_postgres::Config::new();
@@ -195,6 +233,7 @@ async fn main() -> std::io::Result<()> {
             .service(status)
             .service(current)
             .service(logs)
+            .service(get_pkg)
     })
     .bind("127.0.0.1:9077")?
     .run()
