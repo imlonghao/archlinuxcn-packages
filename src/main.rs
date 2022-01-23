@@ -2,9 +2,12 @@
 extern crate enum_display_derive;
 
 use actix_web::{get, web, App, HttpResponse, HttpServer, Responder};
+use anyhow::{Context, Result};
+use cached::proc_macro::cached;
 use postgres_types::{FromSql, ToSql};
 use serde::Serialize;
 use std::fmt::Display;
+use yaml_rust::YamlLoader;
 
 #[derive(Debug, ToSql, FromSql, Display)]
 #[postgres(name = "batchevent")]
@@ -52,6 +55,36 @@ struct CurrentResponse {
     status: String,
     reasons: String,
     elapsed: i32,
+}
+
+#[derive(Serialize)]
+struct LogsResponse {
+    ts: i64,
+    pkgbase: String,
+    pkg_version: String,
+    maintainer: String,
+    elapsed: i32,
+    result: String,
+    cpu: i32,
+    memory: f64,
+}
+
+#[cached(time = 86400, result = true)]
+fn get_maintainer(pkg: String) -> Result<String> {
+    let contents = std::fs::read_to_string(format!(
+        "/data/archgitrepo-webhook/archlinuxcn/{}/lilac.yaml",
+        pkg
+    ))?;
+    let docs = YamlLoader::load_from_str(&contents)?;
+    let doc = &docs[0];
+    let maintainers_yaml = doc["maintainers"]
+        .as_vec()
+        .context("maintainers is empty")?;
+    let mut maintainers: Vec<&str> = vec![];
+    for m in maintainers_yaml {
+        maintainers.push(m["github"].as_str().unwrap_or("None"));
+    }
+    Ok(maintainers.join(", "))
 }
 
 #[get("/imlonghao-api/status")]
@@ -102,8 +135,41 @@ async fn current(db: web::Data<deadpool_postgres::Pool>) -> impl Responder {
 }
 
 #[get("/imlonghao-api/logs")]
-async fn logs() -> impl Responder {
-    HttpResponse::Ok().body("Todo!")
+async fn logs(db: web::Data<deadpool_postgres::Pool>) -> impl Responder {
+    let conn = db.get().await.unwrap();
+    let rows = conn
+        .query(
+            "select ts, pkgbase, COALESCE(pkg_version, '') AS pkg_version, elapsed, result, COALESCE(case when elapsed = 0 then 0 else cputime * 100 / elapsed end, -1) AS cpu, COALESCE(round(memory / 1073741824.0, 3), -1) AS memory from  (
+                select *, row_number() over (partition by pkgbase order by ts desc) as k
+                from lilac.pkglog
+            ) as w where k = 1 order by ts desc",
+            &[],
+        )
+        .await
+        .unwrap();
+    let mut results: Vec<LogsResponse> = vec![];
+    for row in rows {
+        let ts: chrono::DateTime<chrono::Utc> = row.get("ts");
+        let pkgbase: String = row.get("pkgbase");
+        let pkg_version: String = row.get("pkg_version");
+        let maintainer = get_maintainer(pkgbase.clone()).unwrap_or("Unknown".to_string());
+        let elapsed: i32 = row.get("elapsed");
+        let result: BuildResult = row.get("result");
+        let cpu: i32 = row.get("cpu");
+        let memory: pg_bigdecimal::PgNumeric = row.get("memory");
+        let memory_bd: bigdecimal::BigDecimal = memory.n.unwrap();
+        results.push(LogsResponse {
+            ts: ts.timestamp(),
+            pkgbase: pkgbase,
+            pkg_version: pkg_version,
+            maintainer: maintainer,
+            elapsed: elapsed,
+            result: result.to_string(),
+            cpu: cpu,
+            memory: memory_bd.to_f64().unwrap(),
+        })
+    }
+    HttpResponse::Ok().json(results)
 }
 
 #[actix_web::main]

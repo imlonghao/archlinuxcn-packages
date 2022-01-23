@@ -8,9 +8,14 @@ edition = "2021"
 [dependencies]
 actix-web = "4.0.0-beta.21"
 ansi-to-html = "0.1.0"
+anyhow = "1.0.53"
+bigdecimal = "0.3.0"
+cached = "0.30.0"
 chrono = "0.4.19"
 deadpool-postgres = "0.10.1"
 enum-display-derive = "0.1.1"
+pg_bigdecimal = "0.1.4"
 postgres-types = { version = "0.2.2", features = ["derive"]}
 serde = { version = "1.0.135", features = ["derive"] }
 tokio-postgres = { version = "0.7.5", features = ["with-chrono-0_4"]}
+yaml-rust = "0.4.5"

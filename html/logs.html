@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Archlinuxcn Packages</title>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css"
+        integrity="sha256-YY1izqyhIj4W3iyJOaGWOpXDSwrHWFL4Nfk+W0LyCHE=" crossorigin="anonymous">
+</head>
+
+<body>
+    <table id="l" class="stripe cell-border" style="text-align:center">
+    </table>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/datatables.net@1.10.20/js/jquery.dataTables.min.js"
+        integrity="sha256-LXQzPhL1IRyKkA7HpCOBi8I+OC8HqzHUYkjK8S+LKTs=" crossorigin="anonymous"></script>
+    <script>
+        $(document).ready(function () {
+            $('#l').DataTable({
+                "searchDelay": 100,
+                "iDisplayLength": 100,
+                "aLengthMenu": [[100, 250, 500, 1000, -1], [100, 250, 500, 1000, "所有"]],
+                "ajax": {
+                    url: "/imlonghao-api/logs",
+                    dataSrc: ""
+                },
+                "order": [[5, "desc"]],
+                "columnDefs": [
+                    {
+                        targets: 0,
+                        title: "包名",
+                        data: "pkgbase"
+                    },
+                    {
+                        targets: 1,
+                        title: "打包者",
+                        data: "maintainer"
+                    },
+                    {
+                        targets: 2,
+                        title: "版本号",
+                        data: "pkg_version"
+                    },
+                    {
+                        targets: 3,
+                        title: "状态",
+                        data: "result"
+                    },
+                    {
+                        targets: 4,
+                        title: "持续时间（秒）",
+                        data: "elapsed"
+                    },
+                    {
+                        targets: 5,
+                        title: "CPU 使用率（%）",
+                        data: "cpu"
+                    },
+                    {
+                        targets: 6,
+                        title: "内存使用率（GiB）",
+                        data: "memory"
+                    },
+                    {
+                        targets: 7,
+                        title: "打包时间",
+                        data: "ts",
+                        render: function (data, type, row, meta) {
+                            return new Date(data * 1000).toISOString()
+                        }
+                    },
+                    {
+                        targets: 8,
+                        title: "GitHub",
+                        data: "pkgbase",
+                        render: function (data, type, row, meta) {
+                            return `<a href=https://github.com/archlinuxcn/repo/blob/master/archlinuxcn/${data}/ target=_blank rel=noopener>GitHub</a>`
+                        }
+                    }
+                ]
+            });
+        });
+    </script>
+</body>
+
+</html>
