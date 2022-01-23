@@ -1,0 +1,43 @@
+---
+kind: pipeline
+type: docker
+name: build
+steps:
+- name: test
+  image: rust:1.58.1
+  commands:
+  - cargo test
+---
+kind: pipeline
+type: docker
+name: release
+steps:
+- name: build
+  image: rust:1.58.1
+  commands:
+  - apt update
+  - apt install -y --no-install-recommends musl-tools
+  - rustup target add x86_64-unknown-linux-musl
+  - cargo build --release --locked --all-features --target x86_64-unknown-linux-musl
+  when:
+    event: tag
+- name: compress
+  image: ubuntu
+  commands:
+  - apt update && apt install -y --no-install-recommends upx
+  - upx --lzma target/x86_64-unknown-linux-musl/release/archlinuxcn-packages
+  when:
+    event: tag
+- name: gitea_release
+  image: plugins/gitea-release
+  settings:
+    api_key:
+      from_secret: GITEA_BOT_TOKEN
+    base_url: https://git.esd.cc
+    files:
+      - target/x86_64-unknown-linux-musl/release/archlinuxcn-packages
+    checksum:
+      - md5
+      - sha256
+  when:
+    event: tag
