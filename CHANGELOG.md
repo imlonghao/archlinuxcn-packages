@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- Change SQL to make sure batch event is `start`
+
 ### Removed
 
 - Remove `Courier` from font-family

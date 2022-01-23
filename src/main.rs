@@ -19,7 +19,7 @@ code {
 }
 </style>"#;
 
-#[derive(Debug, ToSql, FromSql, Display, PartialEq)]
+#[derive(Debug, ToSql, FromSql, Display)]
 #[postgres(name = "batchevent")]
 enum BatchEvent {
     #[postgres(name = "start")]
@@ -233,15 +233,11 @@ async fn get_pkg_log(
     let conn = db.get().await.unwrap();
     let rows = conn
         .query(
-            "select * from lilac.batch where ts < $1 order by id desc limit 1",
+            "select logdir from lilac.batch where ts < $1 and event = 'start' order by id desc limit 1",
             &[&dt],
         )
         .await
         .unwrap();
-    let event: BatchEvent = rows[0].get("event");
-    if event != BatchEvent::Start {
-        return HttpResponse::BadRequest().body("wrong time");
-    }
     let logdir: String = rows[0].get("logdir");
     let contents =
         std::fs::read_to_string(format!("/home/lilydjwg/.lilac/log/{}/{}.log", logdir, name))
