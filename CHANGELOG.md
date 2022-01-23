@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.2.3] - 2022-01-23
+
 ### Changed
 
 - Change SQL to make sure batch event is `start`
@@ -50,7 +52,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Project init
 - Implemente API for `/status` and `/current`
 
-[Unreleased]: https://git.esd.cc/imlonghao/archlinuxcn-packages/compare/v0.2.2...HEAD
+[Unreleased]: https://git.esd.cc/imlonghao/archlinuxcn-packages/compare/v0.2.3...HEAD
+[0.2.3]: https://git.esd.cc/imlonghao/archlinuxcn-packages/releases/tag/v0.2.3
 [0.2.2]: https://git.esd.cc/imlonghao/archlinuxcn-packages/releases/tag/v0.2.2
 [0.2.1]: https://git.esd.cc/imlonghao/archlinuxcn-packages/releases/tag/v0.2.1
 [0.2.0]: https://git.esd.cc/imlonghao/archlinuxcn-packages/releases/tag/v0.2.0
