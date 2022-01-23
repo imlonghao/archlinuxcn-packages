@@ -55,7 +55,15 @@
                     {
                         targets: 3,
                         title: "状态",
-                        data: "result"
+                        data: "result",
+                        render: function (data, type, row, meta) {
+                            switch (data) {
+                                case "Successful": return "✅"
+                                case "Failed": return "❌"
+                                case "Staged": return "♻️"
+                                default: return data
+                            }
+                        }
                     },
                     {
                         targets: 4,

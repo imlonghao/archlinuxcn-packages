@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Use emoji instead of text in status field
+
 ### Fixed
 
 - Remove the quote tag from more href
