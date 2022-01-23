@@ -10,7 +10,19 @@ use serde::Serialize;
 use std::fmt::Display;
 use yaml_rust::YamlLoader;
 
-#[derive(Debug, ToSql, FromSql, Display)]
+const STYLE_HTML: &'static str = r#"<style>
+code {
+    font-family: "SFMono-Regular", Monaco, Menlo, Consolas, "Liberation Mono", Courier, monospace;
+    font-size: 12px;
+    line-height: 20px;
+    white-space: pre-wrap;
+    margin: 0 auto;
+    width: 80%;
+    display: block;
+}
+</style>"#;
+
+#[derive(Debug, ToSql, FromSql, Display, PartialEq)]
 #[postgres(name = "batchevent")]
 enum BatchEvent {
     #[postgres(name = "start")]
@@ -211,6 +223,39 @@ async fn get_pkg(
     HttpResponse::Ok().json(results)
 }
 
+#[get("/imlonghao-api/pkg/{name}/log/{ts}")]
+async fn get_pkg_log(
+    path: web::Path<(String, i64)>,
+    db: web::Data<deadpool_postgres::Pool>,
+) -> impl Responder {
+    let (name, ts) = path.into_inner();
+    let dt = chrono::DateTime::<chrono::Utc>::from_utc(
+        chrono::naive::NaiveDateTime::from_timestamp(ts, 0),
+        chrono::Utc,
+    );
+    let conn = db.get().await.unwrap();
+    let rows = conn
+        .query(
+            "select * from lilac.batch where ts < $1 order by id desc limit 1",
+            &[&dt],
+        )
+        .await
+        .unwrap();
+    let event: BatchEvent = rows[0].get("event");
+    if event != BatchEvent::Start {
+        return HttpResponse::BadRequest().body("wrong time");
+    }
+    let logdir: String = rows[0].get("logdir");
+    let contents =
+        std::fs::read_to_string(format!("/home/lilydjwg/.lilac/log/{}/{}.log", logdir, name))
+            .unwrap();
+    let converted = ansi_to_html::convert(&contents, true, false).unwrap();
+    let html = format!("{}<code>{}</code>", STYLE_HTML, converted);
+    HttpResponse::Ok()
+        .content_type("text/html; charset=UTF-8")
+        .body(html)
+}
+
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
     let mut cfg = deadpool_postgres::Config::new();
@@ -234,6 +279,7 @@ async fn main() -> std::io::Result<()> {
             .service(current)
             .service(logs)
             .service(get_pkg)
+            .service(get_pkg_log)
     })
     .bind("127.0.0.1:9077")?
     .run()
