@@ -10,6 +10,7 @@ steps:
     remote_name: github
     branch: master
     local_ref: master
+    force: true
     ssh_key:
       from_secret: GITHUB_DEPLOY_SSH_KEY
   when:
