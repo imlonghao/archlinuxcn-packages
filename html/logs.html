@@ -98,10 +98,10 @@
                         title: "打包时间",
                         data: "ts",
                         render: function (data, type, row, meta) {
-                            if(type == 'display') {
-                              return DATE_FORMATTER.format(new Date(data * 1000))
+                            if (type == 'display') {
+                                return DATE_FORMATTER.format(new Date(data * 1000))
                             } else {
-                              return data
+                                return data
                             }
                         }
                     },
