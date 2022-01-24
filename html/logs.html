@@ -21,6 +21,11 @@
     <script src="https://cdn.jsdelivr.net/npm/datatables.net@1.10.20/js/jquery.dataTables.min.js"
         integrity="sha256-LXQzPhL1IRyKkA7HpCOBi8I+OC8HqzHUYkjK8S+LKTs=" crossorigin="anonymous"></script>
     <script>
+        const DATE_FORMATTER = new Intl.DateTimeFormat(undefined, {
+            timeStyle: "medium",
+            dateStyle: "medium",
+            hour12: false,
+        });
         $(window).on('hashchange', function () {
             url = window.location.hash.includes("#") ? "/imlonghao-api/pkg/" + window.location.hash.slice(1) : "/imlonghao-api/logs"
             $.get(url, function (newDataArray) {
@@ -93,7 +98,11 @@
                         title: "打包时间",
                         data: "ts",
                         render: function (data, type, row, meta) {
-                            return new Date(data * 1000).toISOString()
+                            if(type == 'display') {
+                              return DATE_FORMATTER.format(new Date(data * 1000))
+                            } else {
+                              return data
+                            }
                         }
                     },
                     {
