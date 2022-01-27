@@ -233,7 +233,7 @@ async fn get_pkg_log(
     let conn = db.get().await.unwrap();
     let rows = conn
         .query(
-            "select logdir from lilac.batch where ts < $1 and event = 'start' order by id desc limit 1",
+            "select logdir from lilac.batch where ts < $1 and event = 'start' and logdir is not null order by id desc limit 1",
             &[&dt],
         )
         .await

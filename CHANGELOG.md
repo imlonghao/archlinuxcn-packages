@@ -9,6 +9,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [0.2.4] - 2022-01-27
 
+### Fixed
+
+- Ensure logir is not null
+
 ### Added
 
 - Format datetime in locale format [github#1](https://github.com/imlonghao/archlinuxcn-packages/pull/1)
