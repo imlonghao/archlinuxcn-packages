@@ -251,6 +251,15 @@ async fn get_pkg_log(
 
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
+    let _guard = sentry::init((
+        std::env::var("SENTRY").unwrap(),
+        sentry::ClientOptions {
+            release: sentry::release_name!(),
+            ..Default::default()
+        },
+    ));
+    std::env::set_var("RUST_BACKTRACE", "1");
+
     let mut cfg = deadpool_postgres::Config::new();
     cfg.user = Some("imlonghao".to_string());
     cfg.dbname = Some("lilydjwg".to_string());

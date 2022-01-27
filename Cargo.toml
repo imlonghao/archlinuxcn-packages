@@ -16,6 +16,8 @@ deadpool-postgres = "0.10.1"
 enum-display-derive = "0.1.1"
 pg_bigdecimal = "0.1.4"
 postgres-types = { version = "0.2.2", features = ["derive"]}
+sentry = "0.24.2"
+sentry-actix = "0.24.2"
 serde = { version = "1.0.136", features = ["derive"] }
 tokio-postgres = { version = "0.7.5", features = ["with-chrono-0_4"]}
 yaml-rust = "0.4.5"
