@@ -7,12 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [0.2.4] - 2022-01-27
+## [0.2.5] - 2022-01-27
 
 ### Fixed
 
 - Ensure logir is not null
 - Fixed index out of bounds caused by olded ts
+
+## [0.2.4] - 2022-01-27
 
 ### Added
 
@@ -65,7 +67,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Project init
 - Implemente API for `/status` and `/current`
 
-[Unreleased]: https://git.esd.cc/imlonghao/archlinuxcn-packages/compare/v0.2.4...HEAD
+[Unreleased]: https://git.esd.cc/imlonghao/archlinuxcn-packages/compare/v0.2.5...HEAD
+[0.2.5]: https://git.esd.cc/imlonghao/archlinuxcn-packages/releases/tag/v0.2.5
 [0.2.4]: https://git.esd.cc/imlonghao/archlinuxcn-packages/releases/tag/v0.2.4
 [0.2.3]: https://git.esd.cc/imlonghao/archlinuxcn-packages/releases/tag/v0.2.3
 [0.2.2]: https://git.esd.cc/imlonghao/archlinuxcn-packages/releases/tag/v0.2.2
