@@ -238,6 +238,9 @@ async fn get_pkg_log(
         )
         .await
         .unwrap();
+    if rows.len() == 0 {
+        return HttpResponse::BadRequest().body("ts is too old");
+    }
     let logdir: String = rows[0].get("logdir");
     let filename = format!("/home/lilydjwg/.lilac/log/{}/{}.log", logdir, name);
     let contents = match std::fs::read_to_string(&filename) {

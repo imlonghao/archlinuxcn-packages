@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 - Ensure logir is not null
+- Fixed index out of bounds caused by olded ts
 
 ### Added
 
