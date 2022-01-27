@@ -239,9 +239,11 @@ async fn get_pkg_log(
         .await
         .unwrap();
     let logdir: String = rows[0].get("logdir");
-    let contents =
-        std::fs::read_to_string(format!("/home/lilydjwg/.lilac/log/{}/{}.log", logdir, name))
-            .unwrap();
+    let filename = format!("/home/lilydjwg/.lilac/log/{}/{}.log", logdir, name);
+    let contents = match std::fs::read_to_string(&filename) {
+        Ok(x) => x,
+        Err(_) => return HttpResponse::NotFound().body(format!("Log {} not exist", &filename)),
+    };
     let converted = ansi_to_html::convert(&contents, true, false).unwrap();
     let html = format!("{}<code>{}</code>", STYLE_HTML, converted);
     HttpResponse::Ok()

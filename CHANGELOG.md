@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Format datetime in locale format [github#1](https://github.com/imlonghao/archlinuxcn-packages/pull/1)
 - Support Sentry error tracking
+- 404 page for log not found
 
 ## [0.2.3] - 2022-01-23
 
