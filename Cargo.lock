@@ -2380,9 +2380,9 @@ dependencies = [
 
 [[package]]
 name = "sentry-actix"
-version = "0.24.2"
+version = "0.24.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "94f2a116b45ad9d8bbda3c581b8bc2ffdc58cfc22bec0532ca7b4d4108959418"
+checksum = "9e02e7b8ad2bb659e31aab3330d20ac821b60906edf8d7eee5db1bcc15e59084"
 dependencies = [
  "actix-web 3.3.3",
  "futures-util",
