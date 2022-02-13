@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- Bump `actix-web` to `4.0.0-rc.3`
+- Bump `openssl` to `0.10.38`
+- Bump `sentry` to `0.24.3`
+- Bump `sentry-actix` to `0.24.3`
+
 ### Fixed
 
 - Fix loss of precision during timestamp convert
