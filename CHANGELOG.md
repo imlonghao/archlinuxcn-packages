@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.2.6] - 2022-02-14
+
 ### Changed
 
 - Bump `actix-web` to `4.0.0-rc.3`
@@ -78,7 +80,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Project init
 - Implemente API for `/status` and `/current`
 
-[Unreleased]: https://git.esd.cc/imlonghao/archlinuxcn-packages/compare/v0.2.5...HEAD
+[Unreleased]: https://git.esd.cc/imlonghao/archlinuxcn-packages/compare/v0.2.6...HEAD
+[0.2.6]: https://git.esd.cc/imlonghao/archlinuxcn-packages/releases/tag/v0.2.6
 [0.2.5]: https://git.esd.cc/imlonghao/archlinuxcn-packages/releases/tag/v0.2.5
 [0.2.4]: https://git.esd.cc/imlonghao/archlinuxcn-packages/releases/tag/v0.2.4
 [0.2.3]: https://git.esd.cc/imlonghao/archlinuxcn-packages/releases/tag/v0.2.3
