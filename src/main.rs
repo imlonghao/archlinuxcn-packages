@@ -107,7 +107,7 @@ async fn status(db: web::Data<deadpool_postgres::Pool>) -> impl Responder {
     let ts: chrono::DateTime<chrono::Utc> = rows[0].get("ts");
     let event: BatchEvent = rows[0].get("event");
     let result: StatusResponse = StatusResponse {
-        ts: ts.timestamp(),
+        ts: ts.timestamp_millis(),
         event: event.to_string(),
     };
     HttpResponse::Ok().json(result)
@@ -134,7 +134,7 @@ async fn current(db: web::Data<deadpool_postgres::Pool>) -> impl Responder {
         let build_reasons: String = row.get("build_reasons");
         let elapsed: i32 = row.get("elapsed");
         result.push(CurrentResponse {
-            updated_at: updated_at.timestamp(),
+            updated_at: updated_at.timestamp_millis(),
             pkgbase: pkgbase,
             status: build_status.to_string(),
             reasons: build_reasons,
@@ -169,7 +169,7 @@ async fn logs(db: web::Data<deadpool_postgres::Pool>) -> impl Responder {
         let memory: pg_bigdecimal::PgNumeric = row.get("memory");
         let memory_bd: bigdecimal::BigDecimal = memory.n.unwrap();
         results.push(LogsResponse {
-            ts: ts.timestamp(),
+            ts: ts.timestamp_millis(),
             pkgbase: pkgbase,
             pkg_version: pkg_version,
             maintainer: maintainer,
@@ -207,7 +207,7 @@ async fn get_pkg(
         let memory: pg_bigdecimal::PgNumeric = row.get("memory");
         let memory_bd: bigdecimal::BigDecimal = memory.n.unwrap();
         results.push(LogsResponse {
-            ts: ts.timestamp(),
+            ts: ts.timestamp_millis(),
             pkgbase: pkgbase,
             pkg_version: pkg_version,
             maintainer: maintainer,

@@ -36,7 +36,7 @@
                         data: "updated_at",
                         render: function (data, type, row, meta) {
                             if (type == 'display') {
-                                return DATE_FORMATTER.format(new Date(data * 1000))
+                                return DATE_FORMATTER.format(new Date(data))
                             } else {
                                 return data
                             }

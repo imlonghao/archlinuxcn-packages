@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+- Fix loss of precision during timestamp convert
+
 ## [0.2.5] - 2022-01-27
 
 ### Fixed
