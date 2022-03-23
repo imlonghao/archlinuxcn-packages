@@ -12,7 +12,7 @@ anyhow = "1.0.56"
 bigdecimal = "0.3.0"
 cached = "0.34.0"
 chrono = "0.4.19"
-deadpool-postgres = "0.10.1"
+deadpool-postgres = "0.10.2"
 enum-display-derive = "0.1.1"
 openssl = { version = "0.10.38", features = ["vendored"] }
 pg_bigdecimal = "0.1.4"

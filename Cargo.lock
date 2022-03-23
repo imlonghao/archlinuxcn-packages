@@ -560,9 +560,9 @@ dependencies = [
 
 [[package]]
 name = "deadpool-postgres"
-version = "0.10.1"
+version = "0.10.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "46ff1451a33b8b31b15eedcf5401dbbb28606caed4fa94d20487eb3fac2ebd04"
+checksum = "c668a58063c6331e3437e3146970943ad82b1b36169fd979bb2645ac2088209a"
 dependencies = [
  "deadpool",
  "log",
