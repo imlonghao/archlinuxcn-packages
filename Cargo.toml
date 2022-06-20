@@ -17,7 +17,7 @@ enum-display-derive = "0.1.1"
 openssl = { version = "0.10.40", features = ["vendored"] }
 pg_bigdecimal = "0.1.4"
 postgres-types = { version = "0.2.3", features = ["derive"]}
-sentry = "0.26.0"
+sentry = "0.27.0"
 sentry-actix = "0.27.0"
 serde = { version = "1.0.137", features = ["derive"] }
 tokio-postgres = { version = "0.7.6", features = ["with-chrono-0_4"]}
