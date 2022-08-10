@@ -7,6 +7,26 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.2.7] - 2022-08-10
+
+### Added
+
+- add DejaVu Sans Mono to code font families
+
+### Changed
+
+- Bump `actix-web` to `4.1.0`
+- Bump `anyhow` to `1.0.60`
+- Bump `cached` to `0.38.0`
+- Bump `chrono` to `0.4.21`
+- Bump `deadpool-postgres` to `0.10.2`
+- Bump `openssl` to `0.10.41`
+- Bump `postgres-types` to `0.2.3`
+- Bump `sentry` to `0.27.0`
+- Bump `sentry-actix` to `0.27.0`
+- Bump `serde` to `1.0.143`
+- Bump `tokio-postgres` to `0.7.6`
+
 ### Fixed
 
 - Fixed link to the build log
@@ -85,7 +105,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Project init
 - Implemente API for `/status` and `/current`
 
-[Unreleased]: https://git.esd.cc/imlonghao/archlinuxcn-packages/compare/v0.2.6...HEAD
+[Unreleased]: https://git.esd.cc/imlonghao/archlinuxcn-packages/compare/v0.2.7...HEAD
+[0.2.7]: https://git.esd.cc/imlonghao/archlinuxcn-packages/releases/tag/v0.2.7
 [0.2.6]: https://git.esd.cc/imlonghao/archlinuxcn-packages/releases/tag/v0.2.6
 [0.2.5]: https://git.esd.cc/imlonghao/archlinuxcn-packages/releases/tag/v0.2.5
 [0.2.4]: https://git.esd.cc/imlonghao/archlinuxcn-packages/releases/tag/v0.2.4
