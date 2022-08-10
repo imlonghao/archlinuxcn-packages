@@ -12,7 +12,7 @@ use yaml_rust::YamlLoader;
 
 const STYLE_HTML: &'static str = r#"<style>
 code {
-    font-family: "SFMono-Regular", Monaco, Menlo, Consolas, "Liberation Mono", monospace;
+    font-family: "SFMono-Regular", "DejaVu Sans Mono", Monaco, Menlo, Consolas, "Liberation Mono", monospace;
     font-size: 12px;
     line-height: 20px;
     white-space: pre-wrap;
