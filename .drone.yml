@@ -17,7 +17,7 @@ steps:
     branch:
     - master
 - name: test
-  image: rust:1.62.1
+  image: rust:1.63.0
   commands:
   - cargo test
   when:
@@ -29,7 +29,7 @@ type: docker
 name: release
 steps:
 - name: build
-  image: rust:1.62.1
+  image: rust:1.63.0
   commands:
   - apt update
   - apt install -y --no-install-recommends musl-tools pkg-config libssl-dev
