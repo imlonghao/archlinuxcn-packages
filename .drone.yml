@@ -3,19 +3,6 @@ kind: pipeline
 type: docker
 name: build
 steps:
-- name: sync to github
-  image: appleboy/drone-git-push
-  settings:
-    remote: git@github.com:imlonghao/archlinuxcn-packages.git
-    remote_name: github
-    branch: master
-    local_ref: master
-    force: true
-    ssh_key:
-      from_secret: GITHUB_DEPLOY_SSH_KEY
-  when:
-    branch:
-    - master
 - name: test
   image: rust:1.63.0
   commands:
