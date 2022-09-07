@@ -15,7 +15,7 @@ chrono = "0.4.22"
 deadpool-postgres = "0.10.2"
 enum-display-derive = "0.1.1"
 openssl = { version = "0.10.41", features = ["vendored"] }
-pg_bigdecimal = "0.1.4"
+pg_bigdecimal = "0.1.5"
 postgres-types = { version = "0.2.4", features = ["derive"]}
 sentry = "0.27.0"
 sentry-actix = "0.27.0"
