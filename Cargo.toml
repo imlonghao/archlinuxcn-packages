@@ -7,7 +7,7 @@ edition = "2021"
 
 [dependencies]
 actix-web = "4.1.0"
-ansi-to-html = "0.1.0"
+ansi-to-html = "0.1.2"
 anyhow = "1.0.64"
 bigdecimal = "0.3.0"
 cached = "0.39.0"
