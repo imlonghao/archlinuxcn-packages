@@ -19,6 +19,6 @@ pg_bigdecimal = "0.1.5"
 postgres-types = { version = "0.2.4", features = ["derive"]}
 sentry = "0.29.0"
 sentry-actix = "0.29.0"
-serde = { version = "1.0.147", features = ["derive"] }
+serde = { version = "1.0.148", features = ["derive"] }
 tokio-postgres = { version = "0.7.7", features = ["with-chrono-0_4"]}
 yaml-rust = "0.4.5"
