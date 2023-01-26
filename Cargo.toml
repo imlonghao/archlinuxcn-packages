@@ -18,7 +18,7 @@ openssl = { version = "0.10.45", features = ["vendored"] }
 pg_bigdecimal = "0.1.5"
 postgres-types = { version = "0.2.4", features = ["derive"]}
 sentry = "0.29.2"
-sentry-actix = "0.29.1"
+sentry-actix = "0.29.2"
 serde = { version = "1.0.152", features = ["derive"] }
 tokio-postgres = { version = "0.7.7", features = ["with-chrono-0_4"]}
 yaml-rust = "0.4.5"
