@@ -20,5 +20,5 @@ postgres-types = { version = "0.2.5", features = ["derive"]}
 sentry = "0.31.0"
 sentry-actix = "0.31.0"
 serde = { version = "1.0.160", features = ["derive"] }
-tokio-postgres = { version = "0.7.8", features = ["with-chrono-0_4"]}
+tokio-postgres = { git = "https://github.com/sfackler/rust-postgres", rev = "b19fdd4", features = ["with-chrono-0_4"] }
 yaml-rust = "0.4.5"
