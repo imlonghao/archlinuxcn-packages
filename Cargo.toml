@@ -11,7 +11,7 @@ ansi-to-html = "0.1.3"
 anyhow = "1.0.71"
 bigdecimal = "0.3.1"
 cached = "0.43.0"
-chrono = "0.4.25"
+chrono = "0.4.26"
 deadpool-postgres = "0.10.5"
 enum-display-derive = "0.1.1"
 openssl = { version = "0.10.53", features = ["vendored"] }
