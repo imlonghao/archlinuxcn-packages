@@ -16,7 +16,7 @@ deadpool-postgres = "0.10.5"
 enum-display-derive = "0.1.1"
 openssl = { version = "0.10.56", features = ["vendored"] }
 pg_bigdecimal = "0.1.5"
-postgres-types = { version = "0.2.5", features = ["derive"]}
+postgres-types = { version = "0.2.6", features = ["derive"]}
 sentry = "0.31.5"
 sentry-actix = "0.31.5"
 serde = { version = "1.0.183", features = ["derive"] }
