@@ -167,7 +167,7 @@ async fn logs(db: web::Data<deadpool_postgres::Pool>) -> impl Responder {
         let result: BuildResult = row.get("result");
         let cpu: i32 = row.get("cpu");
         let memory: pg_bigdecimal::PgNumeric = row.get("memory");
-        let memory_bd: bigdecimal::BigDecimal = memory.n.unwrap();
+        let memory_bd: pg_bigdecimal::BigDecimal = memory.n.unwrap();
         results.push(LogsResponse {
             ts: ts.timestamp_millis(),
             pkgbase: pkgbase,
@@ -205,7 +205,7 @@ async fn get_pkg(
         let result: BuildResult = row.get("result");
         let cpu: i32 = row.get("cpu");
         let memory: pg_bigdecimal::PgNumeric = row.get("memory");
-        let memory_bd: bigdecimal::BigDecimal = memory.n.unwrap();
+        let memory_bd: pg_bigdecimal::BigDecimal = memory.n.unwrap();
         results.push(LogsResponse {
             ts: ts.timestamp_millis(),
             pkgbase: pkgbase,
