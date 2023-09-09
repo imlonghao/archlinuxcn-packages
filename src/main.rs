@@ -226,8 +226,8 @@ async fn get_pkg_log(
     db: web::Data<deadpool_postgres::Pool>,
 ) -> impl Responder {
     let (name, ts) = path.into_inner();
-    let dt = chrono::DateTime::<chrono::Utc>::from_utc_datetime(
-        chrono::naive::NaiveDateTime::from_timestamp_opt(ts, 0),
+    let dt = chrono::DateTime::<chrono::Utc>::from_naive_utc_and_offset(
+        chrono::naive::NaiveDateTime::from_timestamp_opt(ts, 0).unwrap(),
         chrono::Utc,
     );
     let conn = db.get().await.unwrap();
