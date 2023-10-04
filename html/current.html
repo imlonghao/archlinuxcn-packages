@@ -4,14 +4,17 @@
 <head>
     <meta charset="UTF-8">
     <title>Archlinuxcn Currently Building Package</title>
-    <link rel="stylesheet" href="https://build.archlinuxcn.org/~imlonghao/static/1.10.20-jquery.dataTables.min.css">
+    <link rel="stylesheet" href="https://build.archlinuxcn.org/~imlonghao/static/1.10.20-jquery.dataTables.min.css"
+        integrity="sha256-YY1izqyhIj4W3iyJOaGWOpXDSwrHWFL4Nfk+W0LyCHE=" crossorigin="anonymous">
 </head>
 
 <body>
     <table id="l" class="stripe cell-border" style="text-align:center">
     </table>
-    <script src="https://build.archlinuxcn.org/~imlonghao/static/3.4.1-jquery.min.js"></script>
-    <script src="https://build.archlinuxcn.org/~imlonghao/static/1.10.20-jquery.dataTables.min.js"></script>
+    <script src="https://build.archlinuxcn.org/~imlonghao/static/3.4.1-jquery.min.js"
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    <script src="https://build.archlinuxcn.org/~imlonghao/static/1.13.6-jquery.dataTables.min.js"
+        integrity="sha256-JDYsFFqB4eL9lRhcQwDSWVr7LK3Z8VgMLdzpW8GbIIQ=" crossorigin="anonymous"></script>
     <script>
         const DATE_FORMATTER = new Intl.DateTimeFormat(undefined, {
             timeStyle: "medium",
@@ -19,7 +22,7 @@
             hour12: false,
         });
         $(document).ready(function () {
-            $('#l').DataTable({
+            let table = new DataTable('#l', {
                 "ajax": {
                     url: "/imlonghao-api/current",
                     dataSrc: ""
@@ -59,10 +62,30 @@
                         title: "打包原因",
                         data: "reasons",
                         render: function (data, type, row, meta) {
-                            return JSON.parse(data)
+                            const d = JSON.parse(JSON.parse(data))
+                            return d.map(x => {
+                                switch (x.name) {
+                                    case 'NvChecker':
+                                        return 'NvChecker(' + x.items.map(xx => xx[0] + '[' + xx[1] + ']').join(', ') + ')'
+                                    case 'FailedByDeps':
+                                        return 'FailedByDeps(' + x.deps.join(', ') + ')'
+                                    default:
+                                        return x.name
+                                }
+                            }).join('<br>')
                         }
                     }
                 ]
+            });
+            table.on('click', 'td', function (e) {
+                let tr = e.target.closest('tr');
+                let row = table.row(tr);
+                if (row.child.isShown()) {
+                    row.child.hide();
+                }
+                else {
+                    row.child(JSON.parse(row.data().reasons)).show();
+                }
             });
         });
     </script>
