@@ -273,7 +273,7 @@ checksum = "a4668cab20f66d8d020e1fbc0ebe47217433c1b6c8f2040faf858554e394ace6"
 
 [[package]]
 name = "archlinuxcn-packages"
-version = "0.2.6"
+version = "0.2.8"
 dependencies = [
  "actix-web",
  "ansi-to-html",
