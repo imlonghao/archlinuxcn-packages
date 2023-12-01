@@ -21,9 +21,9 @@ jobs:
         with:
           rust-version: 1.74.0
       - name: Install dependency
-        run:
-          - apt update
-          - apt install -y --no-install-recommends pkg-config libssl-dev
+        run: |
+          apt update
+          apt install -y --no-install-recommends pkg-config libssl-dev
       - name: Compile and release
         uses: rust-build/rust-build.action@v1.4.4
         env:
