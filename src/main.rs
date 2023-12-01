@@ -247,7 +247,7 @@ async fn get_pkg_log(
         Ok(x) => x,
         Err(_) => return HttpResponse::NotFound().body(format!("Log {} not exist", &filename)),
     };
-    let converted = ansi_to_html::convert(&contents, true, false).unwrap();
+    let converted = ansi_to_html::convert(&contents).unwrap();
     let html = format!("{}<code>{}</code>", STYLE_HTML, converted);
     HttpResponse::Ok()
         .content_type("text/html; charset=UTF-8")
