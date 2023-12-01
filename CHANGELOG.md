@@ -7,6 +7,31 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.2.8] - 2023-12-01
+
+### Added
+
+- html(current): add SRI integrity hash
+
+### Changed
+
+- Use gitea actions to do CI test and release
+- html(current): show build reason on click
+- Bump `actix-web` to `4.4.0`
+- Bump `ansi-to-html` to `0.2.1`
+- Bump `anyhow` to `1.0.75`
+- Bump `bigdecimal` to `0.4.2`
+- Bump `cached` to `0.46.1`
+- Bump `chrono` to `0.4.31`
+- Bump `deadpool-postgres` to `0.11.0`
+- Bump `openssl` to `0.10.60`
+- Bump `pg_bigdecimal` to `0.1.5`
+- Bump `postgres-types` to `0.2.6`
+- Bump `sentry` to `0.32.0`
+- Bump `sentry-actix` to `0.32.0`
+- Bump `serde` to `1.0.193`
+- Bump `tokio-postgres` to `0.7.10`
+
 ## [0.2.7] - 2022-08-10
 
 ### Added
