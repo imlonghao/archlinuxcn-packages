@@ -12,10 +12,10 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
       - name: Setup rust
-        uses: ATiltedTree/setup-rust@v1
+        uses: actions-rust-lang/setup-rust-toolchain@v1
         with:
-          rust-version: 1.74.0
-          targets: x86_64-unknown-linux-musl
+          toolchain: 1.74.0
+          target: x86_64-unknown-linux-musl
       - name: Install dependency
         run: |
           apt update
