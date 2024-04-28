@@ -29,6 +29,12 @@
                 },
                 "order": [[0, "desc"]],
                 "paging": false,
+                "rowCallback": function (row, data) {
+                    const d = JSON.parse(JSON.parse(data.reasons))
+                    if (d.length === 1 && d[0].name === "FailedByDeps" && (data.elapsed === 0 || data.stataus === "Pending")) {
+                        $(row).hide(true);
+                    }
+                },
                 "columnDefs": [
                     {
                         targets: 0,
