@@ -30,7 +30,7 @@
                 "order": [[0, "desc"]],
                 "paging": false,
                 "rowCallback": function (row, data) {
-                    const d = JSON.parse(JSON.parse(data.reasons))
+                    const d = JSON.parse(data.reasons)
                     if (d.length === 1 && d[0].name === "FailedByDeps" && (data.elapsed === 0 || data.stataus === "Pending")) {
                         $(row).hide(true);
                     }
@@ -68,7 +68,7 @@
                         title: "打包原因",
                         data: "reasons",
                         render: function (data, type, row, meta) {
-                            const d = JSON.parse(JSON.parse(data))
+                            const d = JSON.parse(data)
                             return d.map(x => {
                                 switch (x.name) {
                                     case 'NvChecker':
