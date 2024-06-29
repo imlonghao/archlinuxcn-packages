@@ -5,96 +5,95 @@
     <meta charset="UTF-8">
     <title>Archlinuxcn Currently Building Package</title>
     <link rel="stylesheet" href="https://build.archlinuxcn.org/~imlonghao/static/1.10.20-jquery.dataTables.min.css"
-        integrity="sha256-YY1izqyhIj4W3iyJOaGWOpXDSwrHWFL4Nfk+W0LyCHE=" crossorigin="anonymous">
+          integrity="sha256-YY1izqyhIj4W3iyJOaGWOpXDSwrHWFL4Nfk+W0LyCHE=" crossorigin="anonymous">
 </head>
 
 <body>
-    <table id="l" class="stripe cell-border" style="text-align:center">
-    </table>
-    <script src="https://build.archlinuxcn.org/~imlonghao/static/3.4.1-jquery.min.js"
+<table id="l" class="stripe cell-border" style="text-align:center">
+</table>
+<script src="https://build.archlinuxcn.org/~imlonghao/static/3.4.1-jquery.min.js"
         integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
-    <script src="https://build.archlinuxcn.org/~imlonghao/static/1.13.6-jquery.dataTables.min.js"
+<script src="https://build.archlinuxcn.org/~imlonghao/static/1.13.6-jquery.dataTables.min.js"
         integrity="sha256-JDYsFFqB4eL9lRhcQwDSWVr7LK3Z8VgMLdzpW8GbIIQ=" crossorigin="anonymous"></script>
-    <script>
-        const DATE_FORMATTER = new Intl.DateTimeFormat(undefined, {
-            timeStyle: "medium",
-            dateStyle: "medium",
-            hour12: false,
-        });
-        $(document).ready(function () {
-            let table = new DataTable('#l', {
-                "ajax": {
-                    url: "/imlonghao-api/current",
-                    dataSrc: ""
-                },
-                "order": [[0, "desc"]],
-                "paging": false,
-                "rowCallback": function (row, data) {
-                    const d = JSON.parse(data.reasons)
-                    if (d.length === 1 && d[0].name === "FailedByDeps" && (data.elapsed === 0 || data.stataus === "Pending")) {
-                        $(row).hide(true);
+<script>
+    const DATE_FORMATTER = new Intl.DateTimeFormat(undefined, {
+        timeStyle: "medium",
+        dateStyle: "medium",
+        hour12: false,
+    });
+    $(document).ready(function () {
+        let table = new DataTable('#l', {
+            "ajax": {
+                url: "/imlonghao-api/current",
+                dataSrc: ""
+            },
+            "order": [[0, "desc"]],
+            "paging": false,
+            "rowCallback": function (row, data) {
+                const d = JSON.parse(data.reasons)
+                if (d.length === 1 && d[0].name === "FailedByDeps" && (data.elapsed === 0 || data.stataus === "Pending")) {
+                    $(row).hide(true);
+                }
+            },
+            "columnDefs": [
+                {
+                    targets: 0,
+                    title: "更新时间",
+                    data: "updated_at",
+                    render: function (data, type, row, meta) {
+                        if (type == 'display') {
+                            return DATE_FORMATTER.format(new Date(data))
+                        } else {
+                            return data
+                        }
                     }
                 },
-                "columnDefs": [
-                    {
-                        targets: 0,
-                        title: "更新时间",
-                        data: "updated_at",
-                        render: function (data, type, row, meta) {
-                            if (type == 'display') {
-                                return DATE_FORMATTER.format(new Date(data))
-                            } else {
-                                return data
+                {
+                    targets: 1,
+                    title: "包名",
+                    data: "pkgbase"
+                },
+                {
+                    targets: 2,
+                    title: "状态",
+                    data: "status"
+                },
+                {
+                    targets: 3,
+                    title: "上次打包用时（秒）",
+                    data: "elapsed"
+                },
+                {
+                    targets: 4,
+                    title: "打包原因",
+                    data: "reasons",
+                    render: function (data, type, row, meta) {
+                        const d = JSON.parse(data)
+                        return d.map(x => {
+                            switch (x.name) {
+                                case 'NvChecker':
+                                    return 'NvChecker(' + x.items.map(xx => xx[0] + '[' + xx[1] + ']').join(', ') + ')'
+                                case 'FailedByDeps':
+                                    return 'FailedByDeps(' + x.deps.join(', ') + ')'
+                                default:
+                                    return x.name
                             }
-                        }
-                    },
-                    {
-                        targets: 1,
-                        title: "包名",
-                        data: "pkgbase"
-                    },
-                    {
-                        targets: 2,
-                        title: "状态",
-                        data: "status"
-                    },
-                    {
-                        targets: 3,
-                        title: "上次打包用时（秒）",
-                        data: "elapsed"
-                    },
-                    {
-                        targets: 4,
-                        title: "打包原因",
-                        data: "reasons",
-                        render: function (data, type, row, meta) {
-                            const d = JSON.parse(data)
-                            return d.map(x => {
-                                switch (x.name) {
-                                    case 'NvChecker':
-                                        return 'NvChecker(' + x.items.map(xx => xx[0] + '[' + xx[1] + ']').join(', ') + ')'
-                                    case 'FailedByDeps':
-                                        return 'FailedByDeps(' + x.deps.join(', ') + ')'
-                                    default:
-                                        return x.name
-                                }
-                            }).join('<br>')
-                        }
+                        }).join('<br>')
                     }
-                ]
-            });
-            table.on('click', 'td', function (e) {
-                let tr = e.target.closest('tr');
-                let row = table.row(tr);
-                if (row.child.isShown()) {
-                    row.child.hide();
                 }
-                else {
-                    row.child(row.data().reasons).show();
-                }
-            });
+            ]
         });
-    </script>
+        table.on('click', 'td', function (e) {
+            let tr = e.target.closest('tr');
+            let row = table.row(tr);
+            if (row.child.isShown()) {
+                row.child.hide();
+            } else {
+                row.child(row.data().reasons).show();
+            }
+        });
+    });
+</script>
 </body>
 
 </html>

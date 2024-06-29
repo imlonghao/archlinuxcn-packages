@@ -13,123 +13,127 @@
 </head>
 
 <body>
-    <table id="l" class="stripe cell-border" style="text-align:center">
-    </table>
-    <script src="https://build.archlinuxcn.org/~imlonghao/static/3.4.1-jquery.min.js"></script>
-    <script src="https://build.archlinuxcn.org/~imlonghao/static/1.10.20-jquery.dataTables.min.js"></script>
-    <script>
-        const DATE_FORMATTER = new Intl.DateTimeFormat(undefined, {
-            timeStyle: "medium",
-            dateStyle: "medium",
-            hour12: false,
+<table id="l" class="stripe cell-border" style="text-align:center">
+</table>
+<script src="https://build.archlinuxcn.org/~imlonghao/static/3.4.1-jquery.min.js"></script>
+<script src="https://build.archlinuxcn.org/~imlonghao/static/1.10.20-jquery.dataTables.min.js"></script>
+<script>
+    const DATE_FORMATTER = new Intl.DateTimeFormat(undefined, {
+        timeStyle: "medium",
+        dateStyle: "medium",
+        hour12: false,
+    });
+    $(window).on('hashchange', function () {
+        url = window.location.hash.includes("#") ? "/imlonghao-api/pkg/" + window.location.hash.slice(1) : "/imlonghao-api/logs"
+        $.get(url, function (newDataArray) {
+            let datatable = $('#l').DataTable()
+            datatable.clear()
+            datatable.rows.add(newDataArray)
+            datatable.draw()
         });
-        $(window).on('hashchange', function () {
-            url = window.location.hash.includes("#") ? "/imlonghao-api/pkg/" + window.location.hash.slice(1) : "/imlonghao-api/logs"
-            $.get(url, function (newDataArray) {
-                let datatable = $('#l').DataTable()
-                datatable.clear()
-                datatable.rows.add(newDataArray)
-                datatable.draw()
-            });
-        });
-        $(document).ready(function () {
-            url = window.location.hash.includes("#") ? "/imlonghao-api/pkg/" + window.location.hash.slice(1) : "/imlonghao-api/logs"
-            $('#l').DataTable({
-                "searchDelay": 100,
-                "iDisplayLength": 100,
-                "aLengthMenu": [[100, 250, 500, 1000, -1], [100, 250, 500, 1000, "所有"]],
-                "ajax": {
-                    url: url,
-                    dataSrc: ""
+    });
+    $(document).ready(function () {
+        url = window.location.hash.includes("#") ? "/imlonghao-api/pkg/" + window.location.hash.slice(1) : "/imlonghao-api/logs"
+        $('#l').DataTable({
+            "searchDelay": 100,
+            "iDisplayLength": 100,
+            "aLengthMenu": [[100, 250, 500, 1000, -1], [100, 250, 500, 1000, "所有"]],
+            "ajax": {
+                url: url,
+                dataSrc: ""
+            },
+            "order": [[7, "desc"]],
+            "columnDefs": [
+                {
+                    targets: 0,
+                    title: "包名",
+                    data: "pkgbase"
                 },
-                "order": [[7, "desc"]],
-                "columnDefs": [
-                    {
-                        targets: 0,
-                        title: "包名",
-                        data: "pkgbase"
-                    },
-                    {
-                        targets: 1,
-                        title: "打包者",
-                        data: "maintainer"
-                    },
-                    {
-                        targets: 2,
-                        title: "版本号",
-                        data: "pkg_version"
-                    },
-                    {
-                        targets: 3,
-                        title: "状态",
-                        data: "result",
-                        render: function (data, type, row, meta) {
-                            switch (data) {
-                                case "Successful": return "✅"
-                                case "Failed": return "❌"
-                                case "Staged": return "♻️"
-                                default: return data
-                            }
-                        }
-                    },
-                    {
-                        targets: 4,
-                        title: "持续时间（秒）",
-                        data: "elapsed"
-                    },
-                    {
-                        targets: 5,
-                        title: "CPU 使用率（%）",
-                        data: "cpu"
-                    },
-                    {
-                        targets: 6,
-                        title: "内存使用（GiB）",
-                        data: "memory",
-                        render: function (data, type, row, meta) {
-                            return data.toFixed(3)
-                        }
-                    },
-                    {
-                        targets: 7,
-                        title: "打包时间",
-                        data: "ts",
-                        render: function (data, type, row, meta) {
-                            if (type == 'display') {
-                                return DATE_FORMATTER.format(new Date(data))
-                            } else {
+                {
+                    targets: 1,
+                    title: "打包者",
+                    data: "maintainer",
+                },
+                {
+                    targets: 2,
+                    title: "版本号",
+                    data: "pkg_version"
+                },
+                {
+                    targets: 3,
+                    title: "状态",
+                    data: "result",
+                    render: function (data, type, row, meta) {
+                        switch (data) {
+                            case "Successful":
+                                return "✅"
+                            case "Failed":
+                                return "❌"
+                            case "Staged":
+                                return "♻️"
+                            default:
                                 return data
-                            }
-                        }
-                    },
-                    {
-                        targets: 8,
-                        title: "GitHub",
-                        data: "pkgbase",
-                        render: function (data, type, row, meta) {
-                            return `<a href=https://github.com/archlinuxcn/repo/blob/master/archlinuxcn/${data}/ target=_blank rel=noopener>GitHub</a>`
-                        }
-                    },
-                    {
-                        targets: 9,
-                        title: "日志",
-                        data: "ts",
-                        render: function (data, type, row, meta) {
-                            return `<a href=https://build.archlinuxcn.org/imlonghao-api/pkg/${row.pkgbase}/log/${Math.floor(data / 1000)} target=_blank rel=noopener>日志</a>`
-                        }
-                    },
-                    {
-                        targets: 10,
-                        title: "更多",
-                        data: "pkgbase",
-                        render: function (data, type, row, meta) {
-                            return `<a href=#${data}>更多</a>`
                         }
                     }
-                ]
-            });
+                },
+                {
+                    targets: 4,
+                    title: "持续时间（秒）",
+                    data: "elapsed"
+                },
+                {
+                    targets: 5,
+                    title: "CPU 使用率（%）",
+                    data: "cpu"
+                },
+                {
+                    targets: 6,
+                    title: "内存使用（GiB）",
+                    data: "memory",
+                    render: function (data, type, row, meta) {
+                        return data.toFixed(3)
+                    }
+                },
+                {
+                    targets: 7,
+                    title: "打包时间",
+                    data: "ts",
+                    render: function (data, type, row, meta) {
+                        if (type == 'display') {
+                            return DATE_FORMATTER.format(new Date(data))
+                        } else {
+                            return data
+                        }
+                    }
+                },
+                {
+                    targets: 8,
+                    title: "GitHub",
+                    data: "pkgbase",
+                    render: function (data, type, row, meta) {
+                        return `<a href=https://github.com/archlinuxcn/repo/blob/master/archlinuxcn/${data}/ target=_blank rel=noopener>GitHub</a>`
+                    }
+                },
+                {
+                    targets: 9,
+                    title: "日志",
+                    data: "ts",
+                    render: function (data, type, row, meta) {
+                        return `<a href=https://build.archlinuxcn.org/imlonghao-api/pkg/${row.pkgbase}/log/${Math.floor(data / 1000)} target=_blank rel=noopener>日志</a>`
+                    }
+                },
+                {
+                    targets: 10,
+                    title: "更多",
+                    data: "pkgbase",
+                    render: function (data, type, row, meta) {
+                        return `<a href=#${data}>更多</a>`
+                    }
+                }
+            ]
         });
-    </script>
+    });
+</script>
 </body>
 
 </html>
