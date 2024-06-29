@@ -53,6 +53,10 @@
                     targets: 1,
                     title: "打包者",
                     data: "maintainer",
+                    render: function (data, type, row, meta) {
+                        const d = JSON.parse(data)
+                        return d.map(item => item.github).join(', ');
+                    }
                 },
                 {
                     targets: 2,
