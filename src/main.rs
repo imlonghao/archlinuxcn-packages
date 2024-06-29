@@ -128,7 +128,7 @@ async fn logs(db: web::Data<deadpool_postgres::Pool>) -> impl Responder {
     let conn = db.get().await.unwrap();
     let rows = conn
         .query(
-            "select ts, pkgbase, COALESCE(pkg_version, '') AS pkg_version, elapsed, result, maintainers #>> '{}', COALESCE(case when elapsed = 0 then 0 else cputime * 100 / elapsed end, -1) AS cpu, COALESCE(memory / 1073741824.0, -1) AS memory from  (
+            "select ts, pkgbase, COALESCE(pkg_version, '') AS pkg_version, elapsed, result, maintainers #>> '{}' as maintainers, COALESCE(case when elapsed = 0 then 0 else cputime * 100 / elapsed end, -1) AS cpu, COALESCE(memory / 1073741824.0, -1) AS memory from  (
                 select *, row_number() over (partition by pkgbase order by ts desc) as k
                 from lilac.pkglog
             ) as w where k = 1 order by ts desc",
@@ -169,7 +169,7 @@ async fn get_pkg(
     let conn = db.get().await.unwrap();
     let rows = conn
         .query(
-            "select ts, pkgbase, COALESCE(pkg_version, '') AS pkg_version, elapsed, result, maintainers #>> '{}', COALESCE(case when elapsed = 0 then 0 else cputime * 100 / elapsed end, -1) AS cpu, COALESCE(memory / 1073741824.0, -1) AS memory from lilac.pkglog WHERE pkgbase=$1 order by id desc",
+            "select ts, pkgbase, COALESCE(pkg_version, '') AS pkg_version, elapsed, result, maintainers #>> '{}' as maintainers, COALESCE(case when elapsed = 0 then 0 else cputime * 100 / elapsed end, -1) AS cpu, COALESCE(memory / 1073741824.0, -1) AS memory from lilac.pkglog WHERE pkgbase=$1 order by id desc",
             &[&name.to_string()],
         )
         .await
