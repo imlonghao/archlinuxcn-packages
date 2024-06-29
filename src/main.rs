@@ -205,10 +205,7 @@ async fn get_pkg_log(
     db: web::Data<deadpool_postgres::Pool>,
 ) -> impl Responder {
     let (name, ts) = path.into_inner();
-    let dt = chrono::DateTime::<chrono::Utc>::from_naive_utc_and_offset(
-        chrono::naive::NaiveDateTime::from_timestamp_opt(ts, 0).unwrap(),
-        chrono::Utc,
-    );
+    let dt = chrono::DateTime::from_timestamp(ts, 0).unwrap();
     let conn = db.get().await.unwrap();
     let rows = conn
         .query(
@@ -267,7 +264,7 @@ async fn main() -> std::io::Result<()> {
             .service(get_pkg)
             .service(get_pkg_log)
     })
-    .bind("127.0.0.1:9077")?
-    .run()
-    .await
+        .bind("127.0.0.1:9077")?
+        .run()
+        .await
 }
