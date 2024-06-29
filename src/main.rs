@@ -239,8 +239,7 @@ async fn main() -> std::io::Result<()> {
             ..Default::default()
         },
     ));
-    std::env::set_var("RUST_BACKTRACE", "1");
-
+    
     let mut cfg = deadpool_postgres::Config::new();
     cfg.user = Some("imlonghao".to_string());
     cfg.dbname = Some("lilydjwg".to_string());
