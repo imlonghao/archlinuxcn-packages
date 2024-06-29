@@ -232,13 +232,18 @@ async fn get_pkg_log(
 
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
-    let _guard = sentry::init((
-        std::env::var("SENTRY").unwrap(),
-        sentry::ClientOptions {
-            release: sentry::release_name!(),
-            ..Default::default()
-        },
-    ));
+    match std::env::var("SENTRY") {
+        Ok(var) => {
+            let _guard = sentry::init((
+                var,
+                sentry::ClientOptions {
+                    release: sentry::release_name!(),
+                    ..Default::default()
+                },
+            ));
+        }
+        _ => {}
+    }
 
     let mut cfg = deadpool_postgres::Config::new();
     cfg.user = Some("imlonghao".to_string());
