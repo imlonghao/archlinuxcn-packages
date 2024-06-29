@@ -123,7 +123,7 @@
                     title: "日志",
                     data: "ts",
                     render: function (data, type, row, meta) {
-                        return `<a href=https://build.archlinuxcn.org/imlonghao-api/pkg/${row.pkgbase}/log/${Math.floor(data / 1000)} target=_blank rel=noopener>日志</a>`
+                        return `<a href=/imlonghao-api/pkg/${row.pkgbase}/log/${Math.floor(data / 1000)} target=_blank rel=noopener>日志</a>`
                     }
                 },
                 {
