@@ -251,7 +251,7 @@ dependencies = [
 
 [[package]]
 name = "archlinuxcn-packages"
-version = "0.3.3"
+version = "0.3.9"
 dependencies = [
  "actix-web",
  "ansi-to-html",
