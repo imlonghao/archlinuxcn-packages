@@ -1,9 +1,33 @@
-## v0.3.0 (2024-06-29)
+## v0.3.9 (2025-04-21)
+
+### Feat
+
+- **html**: remove the hardcoded domain from js
+
+### Fix
+
+- **html**: typo for status
+
+## v0.3.8 (2024-06-29)
+
+### Feat
+
+- make sentry optional
+- **html**: remove the hardcoded domain
+
+## v0.3.7 (2024-06-29)
 
 ### Feat
 
 - new version 0.3.0
 - get maintainers from database
+
+### Fix
+
+- catch case when maintainers is NULL
+- unknown maintainer column name
+- convert jsonb to text
+- remove the unsafe set env
 
 ## v0.2.8 (2023-12-01)
 
