@@ -31,7 +31,7 @@
             "paging": false,
             "rowCallback": function (row, data) {
                 const d = JSON.parse(data.reasons)
-                if (d.length === 1 && d[0].name === "FailedByDeps" && (data.elapsed === 0 || data.stataus === "Pending")) {
+                if (d.length === 1 && d[0].name === "FailedByDeps" && (data.elapsed === 0 || data.status === "Pending")) {
                     $(row).hide(true);
                 }
             },
