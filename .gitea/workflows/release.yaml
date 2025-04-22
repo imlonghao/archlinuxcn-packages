@@ -10,9 +10,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@f43a0e5ff2bd294095638e18286ca9a3d1956744 # v3
       - name: Setup rust
-        uses: actions-rust-lang/setup-rust-toolchain@v1
+        uses: actions-rust-lang/setup-rust-toolchain@9399c7bb15d4c7d47b27263d024f0a4978346ba4 # v1
         with:
           toolchain: nightly
           target: x86_64-unknown-linux-musl
@@ -25,7 +25,7 @@ jobs:
       - name: Compress
         run: upx --lzma target/x86_64-unknown-linux-musl/release/archlinuxcn-packages
       - name: Setup go
-        uses: https://github.com/actions/setup-go@v4
+        uses: https://github.com/actions/setup-go@19bb51245e9c80abacb2e91cc42b33fa478b8639 # v4
         with:
           go-version: '>=1.20.1'
       - name: Release
