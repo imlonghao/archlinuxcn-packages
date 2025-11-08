@@ -249,7 +249,7 @@ version = "0.3.9"
 dependencies = [
  "actix-web",
  "ansi-to-html",
- "bigdecimal 0.4.8",
+ "bigdecimal 0.4.9",
  "chrono",
  "deadpool-postgres",
  "enum-display-derive",
@@ -318,9 +318,9 @@ dependencies = [
 
 [[package]]
 name = "bigdecimal"
-version = "0.4.8"
+version = "0.4.9"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "1a22f228ab7a1b23027ccc6c350b72868017af7ea8356fbdf19f8d991c690013"
+checksum = "560f42649de9fa436b73517378a147ec21f6c997a546581df4b4b31677828934"
 dependencies = [
  "autocfg",
  "libm",
