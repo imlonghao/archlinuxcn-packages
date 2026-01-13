@@ -25,7 +25,7 @@ jobs:
       - name: Compress
         run: upx --lzma target/x86_64-unknown-linux-musl/release/archlinuxcn-packages
       - name: Setup go
-        uses: https://github.com/actions/setup-go@19bb51245e9c80abacb2e91cc42b33fa478b8639 # v4
+        uses: https://github.com/actions/setup-go@7a3fe6cf4cb3a834922a1244abfce67bcef6a0c5 # v6
         with:
           go-version: '>=1.20.1'
       - name: Release
